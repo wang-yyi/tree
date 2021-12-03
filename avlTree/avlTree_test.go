@@ -1,4 +1,4 @@
-package binaryTree
+package avlTree
 
 import (
 	"encoding/json"
@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestBinaryTree_Get(t1 *testing.T) {
-	t := &BinaryTree{}
+func TestAvlTree_Get(t1 *testing.T) {
+	t := &AvlTree{}
 
 	//插入
 	test01 := []struct {

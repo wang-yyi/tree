@@ -1,45 +1,48 @@
 package binaryTree
 
+// BinaryTree 二叉树
 type BinaryTree struct {
-	root *Node
+	Root *Node
 }
 
 type Node struct {
 	Key   string
 	Value interface{}
-	left  *Node
-	right *Node
+	Left  *Node
+	Right *Node
 }
 
-func (t *BinaryTree) Put(key string, value interface{}) {
+// Add  添加数据
+func (t *BinaryTree) Add(key string, value interface{}) {
 	n := &Node{Key: key, Value: value}
-	if t.root == nil {
-		t.root = n
+	if t.Root == nil {
+		t.Root = n
 	} else {
-		t.putRecursive(t.root, n)
+		t.addRecursive(t.Root, n)
 	}
 }
 
-func (t *BinaryTree) putRecursive(node, newNode *Node) {
+func (t *BinaryTree) addRecursive(node, newNode *Node) {
 	if newNode.Key < node.Key {
-		if node.left != nil {
-			t.putRecursive(node.left, newNode)
+		if node.Left != nil {
+			t.addRecursive(node.Left, newNode)
 		} else {
-			node.left = newNode
+			node.Left = newNode
 		}
 	} else if newNode.Key > node.Key {
-		if node.right != nil {
-			t.putRecursive(node.right, newNode)
+		if node.Right != nil {
+			t.addRecursive(node.Right, newNode)
 		} else {
-			node.right = newNode
+			node.Right = newNode
 		}
 	} else {
 		node.Value = newNode.Value
 	}
 }
 
+// Get 查询数据
 func (t *BinaryTree) Get(key string) interface{} {
-	return t.getRecursive(t.root, key)
+	return t.getRecursive(t.Root, key)
 }
 
 func (t *BinaryTree) getRecursive(node *Node, key string) interface{} {
@@ -48,12 +51,23 @@ func (t *BinaryTree) getRecursive(node *Node, key string) interface{} {
 	}
 
 	if key < node.Key {
-		return t.getRecursive(node.left, key)
+		return t.getRecursive(node.Left, key)
 	}
 
 	if key > node.Key {
-		return t.getRecursive(node.right, key)
+		return t.getRecursive(node.Right, key)
 	}
 
 	return node.Value
+}
+
+// traverseInOrderKey 中序遍历所有key
+func (n *Node) traverseInOrderKey(resp *[]string) {
+	if n == nil {
+		return
+	}
+
+	n.Left.traverseInOrderKey(resp)
+	*resp = append(*resp, n.Key)
+	n.Right.traverseInOrderKey(resp)
 }
