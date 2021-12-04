@@ -23,7 +23,6 @@ func TestBinaryTree_Get(t1 *testing.T) {
 		{"==>add", "e", "武汉"},
 		{"==>add", "f", "大连"},
 		{"==>add", "g", "西藏"},
-		{"==>add", "h", "三亚"},
 	}
 
 	for _, tt := range test01 {
