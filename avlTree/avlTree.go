@@ -11,7 +11,7 @@ type AvlTree struct {
 }
 
 type Node struct {
-	Key    string
+	Key    int
 	Value  interface{}
 	Left   *Node
 	Right  *Node
@@ -19,13 +19,13 @@ type Node struct {
 }
 
 // Add 添加/更新节点
-func (t *AvlTree) Add(key string, val interface{}) {
+func (t *AvlTree) Add(key int, val interface{}) {
 	isAdd, nd := t.Root.add(key, val)
 	t.Size += isAdd
 	t.Root = nd
 }
 
-func (n *Node) add(key string, val interface{}) (int, *Node) {
+func (n *Node) add(key int, val interface{}) (int, *Node) {
 	if n == nil {
 		return 1, &Node{key, val, nil, nil, 0}
 	}
@@ -43,8 +43,29 @@ func (n *Node) add(key string, val interface{}) (int, *Node) {
 	return isAdd, n.updateHeightAndBalance(isAdd)
 }
 
+// Get 查询数据
+func (t *AvlTree) Get(key int) interface{} {
+	return t.getRecursive(t.Root, key)
+}
+
+func (t *AvlTree) getRecursive(node *Node, key int) interface{} {
+	if node == nil {
+		return nil
+	}
+
+	if key < node.Key {
+		return t.getRecursive(node.Left, key)
+	}
+
+	if key > node.Key {
+		return t.getRecursive(node.Right, key)
+	}
+
+	return node.Value
+}
+
 // Remove 移除节点
-func (t *AvlTree) Remove(key string) error {
+func (t *AvlTree) Remove(key int) error {
 	if t.Root == nil {
 		return errors.New("failed to remove,avlTree is empty")
 	}
@@ -57,7 +78,7 @@ func (t *AvlTree) Remove(key string) error {
 
 // 删除nd为根节点中key节点,返回更新了高度和维持平衡的新nd节点
 // 返回值 1 表明有节点被删除,0 表明没有节点被删除
-func (n *Node) remove(key string) (int, *Node) {
+func (n *Node) remove(key int) (int, *Node) {
 	// 找不到key对应node,返回0,nil
 	if n == nil {
 		return 0, nil
@@ -77,7 +98,7 @@ func (n *Node) remove(key string) (int, *Node) {
 			// 待删除节点左右子树均不为空的情况
 			// 找到比待删除节点大的最小节点,即右子树的最小节点
 			retNode = n.Right.getMinNode()
-			_, retNode.Right = n.Right.remove(key)
+			_, retNode.Right = n.Right.remove(retNode.Key)
 			retNode.Left = n.Left
 		} else if n.Left != nil {
 			retNode = n.Left
@@ -95,29 +116,8 @@ func (n *Node) remove(key string) (int, *Node) {
 	return isRemove, retNode
 }
 
-// Get 获取节点数据
-func (t *AvlTree) Get(key string) interface{} {
-	return t.Root.get(key)
-}
-
-func (n *Node) get(key string) interface{} {
-	if n == nil {
-		return nil
-	}
-
-	if n.Key == key {
-		return n.Value
-	}
-
-	if key < n.Key {
-		return n.Left.get(key)
-	}
-
-	return n.Right.get(key)
-}
-
 // traverseInOrderKey 中序遍历所有key
-func (n *Node) traverseInOrderKey(resp *[]string) {
+func (n *Node) traverseInOrderKey(resp *[]int) {
 	if n == nil {
 		return
 	}

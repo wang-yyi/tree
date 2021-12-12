@@ -13,16 +13,19 @@ func TestBinaryTree_Get(t1 *testing.T) {
 	//插入
 	test01 := []struct {
 		name  string
-		key   string
+		key   int
 		value interface{}
 	}{
-		{"==>add", "a", "北京"},
-		{"==>add", "b", "上海"},
-		{"==>add", "c", "广州"},
-		{"==>add", "d", "深圳"},
-		{"==>add", "e", "武汉"},
-		{"==>add", "f", "大连"},
-		{"==>add", "g", "西藏"},
+		{"==>add", 1, "北京"},
+		{"==>add", 2, "上海"},
+		{"==>add", 3, "广州"},
+		{"==>add", 4, "深圳"},
+		{"==>add", 5, "武汉"},
+		{"==>add", 6, "大连"},
+		{"==>add", 7, "西藏"},
+		{"==>add", 8, "三亚"},
+		{"==>add", 9, "沈阳"},
+		{"==>add", 10, "长春"},
 	}
 
 	for _, tt := range test01 {
@@ -34,11 +37,11 @@ func TestBinaryTree_Get(t1 *testing.T) {
 	//查询
 	test02 := []struct {
 		name string
-		key  string
+		key  int
 		want interface{}
 	}{
-		{"==>get", "b", "上海"},
-		{"==>get", "d", "深圳"},
+		{"==>get", 2, "上海"},
+		{"==>get", 4, "深圳"},
 	}
 
 	for _, tt := range test02 {
@@ -50,7 +53,7 @@ func TestBinaryTree_Get(t1 *testing.T) {
 	}
 
 	//查看树结构（中序遍历）
-	arr := make([]string, 0)
+	arr := make([]int, 0)
 	t.Root.traverseInOrderKey(&arr)
 	fmt.Println("==============中序遍历==================>>")
 	fmt.Println(arr)

@@ -6,14 +6,14 @@ type BinaryTree struct {
 }
 
 type Node struct {
-	Key   string
+	Key   int
 	Value interface{}
 	Left  *Node
 	Right *Node
 }
 
 // Add  添加数据
-func (t *BinaryTree) Add(key string, value interface{}) {
+func (t *BinaryTree) Add(key int, value interface{}) {
 	n := &Node{Key: key, Value: value}
 	if t.Root == nil {
 		t.Root = n
@@ -41,11 +41,11 @@ func (t *BinaryTree) addRecursive(node, newNode *Node) {
 }
 
 // Get 查询数据
-func (t *BinaryTree) Get(key string) interface{} {
+func (t *BinaryTree) Get(key int) interface{} {
 	return t.getRecursive(t.Root, key)
 }
 
-func (t *BinaryTree) getRecursive(node *Node, key string) interface{} {
+func (t *BinaryTree) getRecursive(node *Node, key int) interface{} {
 	if node == nil {
 		return nil
 	}
@@ -62,7 +62,7 @@ func (t *BinaryTree) getRecursive(node *Node, key string) interface{} {
 }
 
 // traverseInOrderKey 中序遍历所有key
-func (n *Node) traverseInOrderKey(resp *[]string) {
+func (n *Node) traverseInOrderKey(resp *[]int) {
 	if n == nil {
 		return
 	}

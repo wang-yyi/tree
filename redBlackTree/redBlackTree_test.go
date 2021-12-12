@@ -1,4 +1,4 @@
-package avlTree
+package redBlackTree
 
 import (
 	"encoding/json"
@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestAvlTree_Get(t1 *testing.T) {
-	t := &AvlTree{}
+func TestRedBlackTree_Get(t1 *testing.T) {
+	t := &RedBlackTree{}
 
 	//插入
 	test01 := []struct {
